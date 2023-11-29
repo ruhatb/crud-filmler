@@ -1,22 +1,48 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 
-const Movie = ({ id, deleteMovie }) => {
+import swal from 'sweetalert';
+
+const Movie =( { addToFavorites, deleteMovie }) => {
+ 
+  const { id } = useParams();
+  const {push } = useHistory();
   const [movie, setMovie] = useState({});
-  const history = useHistory();
+ 
+
+const alertDelete = () => {
+  swal({
+    title: "Are you sure?",
+    text: "Once deleted, you will not be able to recover this imaginary file!",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  })
+  .then((willDelete) => {
+    
+    if (willDelete) {
+      deleteHandler();
+      swal("Poof! Your imaginary file has been deleted!", {
+        icon: "success",
+      });
+    } else {
+      swal("Your imaginary file is safe!");
+    }
+  });
+}
 
   const deleteHandler = () => {
     axios
       .delete(`http://localhost:9000/api/movies/${id}`)
       .then((res) => {
-        deleteMovie(id);
-        history.push("/movies");
+        deleteMovie(movie.id);
+        push("/movies");
       })
       .catch((err) => {
         console.log(err.response);
       });
-  };
+  }; 
 
   useEffect(() => {
     axios
@@ -64,7 +90,7 @@ const Movie = ({ id, deleteMovie }) => {
         <Link to={`/movies/edit/${movie.id}`} className="myButton bg-blue-600 hover:bg-blue-500">
           Edit
         </Link>
-        <button onClick={deleteHandler} type="button" className="myButton bg-red-600 hover-bg-red-500">
+        <button onClick={alertDelete} type="button" className="myButton bg-red-600 hover-bg-red-500">
           Sil
         </button>
       </div>
