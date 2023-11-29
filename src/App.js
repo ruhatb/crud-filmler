@@ -44,27 +44,6 @@ const App = (props) => {
 
 
   const addToFavorites = (movie) => {
-    const isThereIn = favoriteMovies.find((film) => film.id === movie.id);
-    if( isThereIn ) {
-     swal({
-      title: "Opps!",
-      text: "Zaten ekli..",
-      icon: "succes",
-      button: "Anladım",});
-      return ;}
-      
-
-        swal( {
-          title:"Başarıyla eklendi",
-          text:   "Favorileri eklendi...",
-          icon: "Succes",
-          button: "Success it",
-        });
-        /* true false ? */ /* return ? */
-        
-        const newFavoriteMovies = [...favoriteMovies, movie];
-        setFavoriteMovies(newFavoriteMovies);
-
 
   }
 
@@ -82,10 +61,6 @@ const App = (props) => {
           <Switch>
             <Route path="/movies/edit/:id">
             <EditMovieForm setMovies={setMovies}/>
-            </Route>
-
-              <Route path="/movies/add">
-            <AddMovie setMovies={setMovies}/>
             </Route>
 
             <Route path="/movies/:id">

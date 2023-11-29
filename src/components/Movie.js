@@ -1,38 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
-import swal from 'sweetalert';
-
-const Movie =( { addToFavorites, deleteMovie }) => {
- 
-  const { id } = useParams();
-  const {push } = useHistory();
+const Movie = ({ id, deleteMovie }) => {
   const [movie, setMovie] = useState({});
- 
-
-const alertDelete = () => {
-  swal({
-    title: "Are you sure?",
-    text: "Once deleted, you will not be able to recover this imaginary file!",
-    icon: "warning",
-    buttons: true,
-    dangerMode: true,
-  })
-  .then((willDelete) => {
-    
-    if (willDelete) {
-      deleteHandler();
-      swal("Poof! Your imaginary file has been deleted!", {
-        icon: "success",
-      });
-    } else {
-      swal("Your imaginary file is safe!");
-    }
-  });
-}
-
-const favoriHandler = () => { addToFavorites(movie) };
+  const history = useHistory();
 
   const deleteHandler = () => {
     axios
