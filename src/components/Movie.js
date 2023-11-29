@@ -1,22 +1,25 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 
-const Movie = ({ id, deleteMovie }) => {
+const Movie =( { addToFavorites, deleteMovie }) => {
+ 
+  const { id } = useParams();
+  const {push } = useHistory();
   const [movie, setMovie] = useState({});
-  const history = useHistory();
+ 
 
   const deleteHandler = () => {
     axios
       .delete(`http://localhost:9000/api/movies/${id}`)
       .then((res) => {
-        deleteMovie(id);
-        history.push("/movies");
+        deleteMovie(movie.id);
+        push("/movies");
       })
       .catch((err) => {
         console.log(err.response);
       });
-  };
+  }; 
 
   useEffect(() => {
     axios
