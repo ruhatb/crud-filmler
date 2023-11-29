@@ -32,6 +32,8 @@ const alertDelete = () => {
   });
 }
 
+const favoriHandler = () => { addToFavorites(movie) };
+
   const deleteHandler = () => {
     axios
       .delete(`http://localhost:9000/api/movies/${id}`)
@@ -84,7 +86,7 @@ const alertDelete = () => {
       </div>
 
       <div className="px-5 py-3 border-t border-zinc-200 flex justify-end gap-2">
-        <button className="myButton bg-blue-600 hover:bg-blue-500">
+        <button onClick={ favoriHandler} className="myButton bg-blue-600 hover:bg-blue-500">
           Favorilere ekle
         </button>
         <Link to={`/movies/edit/${movie.id}`} className="myButton bg-blue-600 hover:bg-blue-500">

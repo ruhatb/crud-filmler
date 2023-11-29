@@ -9,6 +9,7 @@ import AddMovie from "./components/AddMovie";
 import FavoriteMovieList from './components/FavoriteMovieList';
 
 import axios from 'axios';
+import swal from "sweetalert";
 
 const App = (props) => {
   const [movies, setMovies] = useState([]);
@@ -28,10 +29,42 @@ const App = (props) => {
     const newMovies = movies.filter((movie) => movie.id !== id );
     setMovies(newMovies);
     
+
+    /* silinmiş movie için favoriden cıakrtma */ /* neden delete ? */
+
+  const newFavoriteMovies = favoriteMovies.filter( (movie) => movie.id !== id );
+  setFavoriteMovies(newFavoriteMovies);
+
   }
 
+
+ 
+
+
+
+
   const addToFavorites = (movie) => {
-    
+    const isThereIn = favoriteMovies.find((film) => film.id === movie.id);
+    if( isThereIn ) {
+     swal({
+      title: "Opps!",
+      text: "Zaten ekli..",
+      icon: "succes",
+      button: "Anladım",});
+      return ;}
+      
+
+        swal( {
+          title:"Başarıyla eklendi",
+          text:   "Favorileri eklendi...",
+          icon: "Succes",
+          button: "Success it",
+        });
+        /* true false ? */ /* return ? */
+        
+        const newFavoriteMovies = [...favoriteMovies, movie];
+        setFavoriteMovies(newFavoriteMovies);
+
 
   }
 
